@@ -1,12 +1,12 @@
 import { WebSocketServer } from "ws";
 
-import { httpServer } from "./src/http_server/index.js";
-import infoMessages from "./src/ws_server/utils/messages.js";
-import handleWsClientMessage from "./src/ws_server/handlers/wsClientHandler.js";
-import { createWsId} from "./src/ws_server/utils/createRandomIds.js";
+import { httpServer } from "./http_server/index.js";
+import infoMessages from "./ws_server/utils/messages.js";
+import handleWsClientMessage from "./ws_server/handlers/wsClientHandler.js";
+import { createWsId } from "./ws_server/utils/createRandomIds.js";
 import { WebSocket } from "ws";
 
-interface ICustomWsClient extends WebSocket {
+export interface ICustomWsClient extends WebSocket {
   id: number;
 }
 
@@ -21,18 +21,17 @@ wss.on("listening", () => {
   console.log(infoMessages.wsServerStarted(WS_PORT));
 });
 
-wss.on("connection", function connection(wsClient: ICustomWsClient ) {
-  wsClient.id = createWsId()
+wss.on("connection", function connection(wsClient: ICustomWsClient) {
+  wsClient.id = createWsId();
 
   try {
     wsClient.on("error", (err) => {
-      console.log(infoMessages.unknownError(), err.message)
+      console.log(infoMessages.unknownError(), err.message);
     });
 
     wsClient.on("message", function message(data) {
       if (data !== null) {
-        handleWsClientMessage(data);
-        console.log("received: %s", data);
+        handleWsClientMessage(data, wsClient);
       } else {
         console.log(infoMessages.noDataReceived());
       }

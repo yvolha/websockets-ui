@@ -1,15 +1,15 @@
 {
     "name": "ws_task",
     "version": "1.0.0",
-    "description": "Template for the WebSocket remote control task",
-    "main": "index.js",
+    "description": "WebSocket remote control task",
+    "main": "index.ts",
     "type": "module",
     "scripts": {
         "start": "npx nodemon",
         "build": "npm run build && node dist/server",
         "lint": "eslint . --ext .ts --fix"
     },
-    "author": "Andrei Auchynnikau",
+    "author": "Andrei Auchynnikau / Volha Yakauleva",
     "keywords": [],
     "license": "ISC",
     "devDependencies": {
