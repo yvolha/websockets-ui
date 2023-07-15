@@ -3,15 +3,15 @@ import { WebSocketServer } from "ws";
 import { httpServer } from "./src/http_server/index.js";
 import infoMessages from "./src/ws_server/utils/messages.js";
 import handleWsClientMessage from "./src/ws_server/handlers/wsClientHandler.js";
+import { createWsId} from "./src/ws_server/utils/createRandomIds.js";
+import { WebSocket } from "ws";
+
+interface ICustomWsClient extends WebSocket {
+  id: number;
+}
 
 process.on("SIGINT", () => {
   setImmediate(() => process.exit(0));
-});
-
-const HTTP_PORT = 8181;
-
-httpServer.listen(HTTP_PORT, () => {
-  console.log(infoMessages.httpServerStarted(HTTP_PORT));
 });
 
 const WS_PORT = 3000;
@@ -21,9 +21,13 @@ wss.on("listening", () => {
   console.log(infoMessages.wsServerStarted(WS_PORT));
 });
 
-wss.on("connection", function connection(wsClient) {
+wss.on("connection", function connection(wsClient: ICustomWsClient ) {
+  wsClient.id = createWsId()
+
   try {
-    wsClient.on("error", console.error);
+    wsClient.on("error", (err) => {
+      console.log(infoMessages.unknownError(), err.message)
+    });
 
     wsClient.on("message", function message(data) {
       if (data !== null) {
@@ -35,7 +39,7 @@ wss.on("connection", function connection(wsClient) {
     });
 
     wsClient.on("close", function () {
-      console.log(infoMessages.connectionTerminated);
+      console.log(infoMessages.connectionTerminated());
     });
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -44,4 +48,9 @@ wss.on("connection", function connection(wsClient) {
       console.log(infoMessages.unknownError());
     }
   }
+});
+
+const HTTP_PORT = 8181;
+httpServer.listen(HTTP_PORT, () => {
+  console.log(infoMessages.httpServerStarted(HTTP_PORT));
 });
