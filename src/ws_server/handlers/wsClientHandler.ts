@@ -17,7 +17,7 @@ export default async (rawData: RawData, wsClient: ICustomWsClient) => {
 
   switch (parsedMessage.type) {
     case wsMessageTypes.reg:
-      regHandler(parsedMessage, wsClient);
+      regHandler(parsedMessage, wsClient, wsMessageTypes.reg);
       break;
 
     case wsMessageTypes.create_room:

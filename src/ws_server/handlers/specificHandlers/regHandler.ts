@@ -1,15 +1,46 @@
 import { ICustomWsClient } from "../../../index.js";
+import { regUserInDb } from "../../database/database.js";
+import { successMessages } from "../../utils/messages.js";
 import { isUserNameInvalid } from "../../utils/validateUser.js";
 import { IParsedMessage } from "../wsClientHandler.js";
-import { wsMessageTypes } from "../../utils/wsMessageTypes.js";
 
-export const regHandler = (parsedMessage: IParsedMessage, wsClient: ICustomWsClient) => {
-  console.log("registering", parsedMessage);
-
+export const regHandler = async (
+  parsedMessage: IParsedMessage,
+  wsClient: ICustomWsClient,
+  wsMessageType: string
+) => {
   const { name, password } = JSON.parse(parsedMessage.data.toString());
-  console.log(name, password);
+  const index = wsClient.id;
 
-  if (isUserNameInvalid(name)) {
-    wsClient;
+  const errorText = isUserNameInvalid(name);
+  if (errorText) {
+    wsClient.send(
+      JSON.stringify({
+        type: wsMessageType,
+        data: JSON.stringify({
+          name,
+          index,
+          error: true,
+          errorText,
+        }),
+        id: 0,
+      })
+    );
+  } else {
+    wsClient.send(
+      JSON.stringify({
+        type: wsMessageType,
+        data: JSON.stringify({
+          name,
+          index,
+          error: false,
+          errorText: "",
+        }),
+        id: 0,
+      })
+    );
+
+    await regUserInDb(index, name, password);
+    console.log(successMessages.userRegistered(index, name));
   }
 };

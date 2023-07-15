@@ -5,3 +5,8 @@ export default {
   connectionTerminated: () => "WebSocket connection terminated.",
   unknownError: () => "There has been an unknown error, please try again.",
 };
+
+export const successMessages = {
+  userRegistered: (id: number, name: string) =>
+    `User with ID "${id}" and name "${name}" registered successfully.`,
+};

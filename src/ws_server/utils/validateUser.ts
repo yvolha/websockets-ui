@@ -1,9 +1,8 @@
-import { ICustomWsClient } from "../../index.js";
 import { usersDb } from "../database/database.js";
 
 const validationErrors = {
   lengthTooShort: () => "Length is too short.",
-  duplicateName: () => "There already is a user with such name, please pick a different name.",
+  duplicateName: () => "There already is a user with such a name, please pick a different name.",
   wrongPassword: () => "Incorrect password, please try again.",
 };
 
