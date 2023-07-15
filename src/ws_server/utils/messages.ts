@@ -4,4 +4,4 @@ export default {
   noDataReceived: () => "No data received.",
   connectionTerminated: () => "WebSocket connection terminated.",
   unknownError: () => "There has been an unknown error, please try again.",
-}
+};

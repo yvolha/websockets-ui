@@ -1,7 +1,6 @@
-export function createWsId (): number {
-  if (!createWsId.count) {
-    createWsId.count = 0;
-  }
+const createWsIdFunc = () => {
+  let count = 0;
+  return () => count++;
+};
 
-  return ++createWsId.count;
-}
+export const createWsId = createWsIdFunc();

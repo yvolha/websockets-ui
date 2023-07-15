@@ -22,7 +22,6 @@ wss.on("listening", () => {
 });
 
 wss.on("connection", function connection(wsClient) {
-
   try {
     wsClient.on("error", console.error);
 
@@ -33,18 +32,16 @@ wss.on("connection", function connection(wsClient) {
       } else {
         console.log(infoMessages.noDataReceived());
       }
-      
     });
 
     wsClient.on("close", function () {
       console.log(infoMessages.connectionTerminated);
     });
   } catch (err: unknown) {
-    if ( err instanceof Error) {
+    if (err instanceof Error) {
       console.log(infoMessages.unknownError(), err.message);
     } else {
       console.log(infoMessages.unknownError());
     }
   }
-
 });
