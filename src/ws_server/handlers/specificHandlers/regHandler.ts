@@ -2,9 +2,11 @@ import { ICustomWsClient } from "../../../index.js";
 import { regUserInDb } from "../../database/database.js";
 import { successMessages } from "../../utils/messages.js";
 import { isUserNameInvalid } from "../../utils/validateUser.js";
+import { sendAvailableRooms } from "../messagesToAll/updateAvailableRooms.js";
+import { sendUpdateWinners } from "../messagesToAll/updateWinners.js";
 import { IParsedMessage } from "../wsClientHandler.js";
 
-export const regHandler = async (
+export const handleReg = async (
   parsedMessage: IParsedMessage,
   wsClient: ICustomWsClient,
   wsMessageType: string
@@ -42,5 +44,8 @@ export const regHandler = async (
 
     await regUserInDb(index, name, password);
     console.log(successMessages.userRegistered(index, name));
+
+    sendUpdateWinners();
+    sendAvailableRooms();
   }
 };

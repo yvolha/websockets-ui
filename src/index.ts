@@ -3,7 +3,7 @@ import { WebSocketServer } from "ws";
 import { httpServer } from "./http_server/index.js";
 import infoMessages from "./ws_server/utils/messages.js";
 import handleWsClientMessage from "./ws_server/handlers/wsClientHandler.js";
-import { createWsId } from "./ws_server/utils/createRandomIds.js";
+import { createWsId } from "./ws_server/utils/createIds.js";
 import { WebSocket } from "ws";
 
 export interface ICustomWsClient extends WebSocket {

@@ -1,9 +1,10 @@
 import { RawData } from "ws";
 
 import infoMessages from "../utils/messages.js";
-import { regHandler } from "./specificHandlers/regHandler.js";
 import { ICustomWsClient } from "../../index.js";
 import { wsMessageTypes } from "../utils/wsMessageTypes.js";
+import { handleReg } from "./specificHandlers/regHandler.js";
+import { handleCreateRoom } from "./specificHandlers/createRoomHandler.js";
 
 export interface IParsedMessage {
   type: string;
@@ -17,22 +18,17 @@ export default async (rawData: RawData, wsClient: ICustomWsClient) => {
 
   switch (parsedMessage.type) {
     case wsMessageTypes.reg:
-      regHandler(parsedMessage, wsClient, wsMessageTypes.reg);
+      handleReg(parsedMessage, wsClient, wsMessageTypes.reg);
       break;
 
     case wsMessageTypes.create_room:
+      handleCreateRoom(wsClient);
       break;
 
     case wsMessageTypes.create_game:
       break;
 
     case wsMessageTypes.add_user_to_room:
-      break;
-
-    case wsMessageTypes.update_room:
-      break;
-
-    case wsMessageTypes.update_winners:
       break;
 
     case wsMessageTypes.add_ships:

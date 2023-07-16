@@ -13,9 +13,16 @@ const createUserIdFunc = () => {
 
 export const createUserId = createUserIdFunc();
 
-const createGameroomIdFunc = () => {
+const createGameRoomIdFunc = () => {
   let count = 0;
   return () => count++;
 };
 
-export const createGameroomId = createGameroomIdFunc();
+export const createGameRoomId = createGameRoomIdFunc();
+
+const createGameIdFunc = () => {
+  let count = 0;
+  return () => count++;
+};
+
+export const createGameId = createGameIdFunc();

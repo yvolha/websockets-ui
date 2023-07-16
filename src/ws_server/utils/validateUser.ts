@@ -17,3 +17,17 @@ export const isUserNameInvalid = (name: string) => {
 
   return null;
 };
+
+/*
+TODO add if there's an option to log out and relogin
+export const isPasswordInvalid = (password: string) => {
+  if (name.length < 5) {
+    return validationErrors.lengthTooShort();
+  }
+
+  if (Object.values(usersDb).find((el) => el.name === name)) {
+    return validationErrors.duplicateName();
+  }
+
+  return null;
+}; */
