@@ -5,6 +5,7 @@ import { ICustomWsClient } from "../../index.js";
 import { wsMessageTypes } from "../utils/wsMessageTypes.js";
 import { handleReg } from "./specificHandlers/regHandler.js";
 import { handleCreateRoom } from "./specificHandlers/createRoomHandler.js";
+import { handleAddUserToRoom } from "./specificHandlers/addUserToRoomHandler.js";
 
 export interface IParsedMessage {
   type: string;
@@ -25,10 +26,8 @@ export default async (rawData: RawData, wsClient: ICustomWsClient) => {
       handleCreateRoom(wsClient);
       break;
 
-    case wsMessageTypes.create_game:
-      break;
-
     case wsMessageTypes.add_user_to_room:
+      handleAddUserToRoom(parsedMessage, wsClient);
       break;
 
     case wsMessageTypes.add_ships:
