@@ -20,7 +20,7 @@ export const handleCreateRoom = (wsClient: ICustomWsClient) => {
       ],
     });
 
-    successMessages.roomCreated(roomId, name);
+    console.log(successMessages.roomCreated(roomId, name));
   }
 
   sendAvailableRooms();

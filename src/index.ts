@@ -1,13 +1,16 @@
-import { WebSocketServer } from "ws";
+import { WebSocketServer, WebSocket } from "ws";
 
 import { httpServer } from "./http_server/index.js";
 import infoMessages from "./ws_server/utils/messages.js";
 import handleWsClientMessage from "./ws_server/handlers/wsClientHandler.js";
 import { createWsId } from "./ws_server/utils/createIds.js";
-import { WebSocket } from "ws";
 
 export interface ICustomWsClient extends WebSocket {
   id: number;
+}
+
+class CustomWebSocket extends WebSocket {
+  id = createWsId();
 }
 
 process.on("SIGINT", () => {
@@ -15,15 +18,16 @@ process.on("SIGINT", () => {
 });
 
 const WS_PORT = 3000;
-export const wss = new WebSocketServer({ port: WS_PORT });
+export const wss = new WebSocketServer({
+  port: WS_PORT,
+  WebSocket: CustomWebSocket,
+});
 
 wss.on("listening", () => {
   console.log(infoMessages.wsServerStarted(WS_PORT));
 });
 
-wss.on("connection", function connection(wsClient: ICustomWsClient) {
-  wsClient.id = createWsId();
-
+wss.on("connection", function connection(wsClient) {
   try {
     wsClient.on("error", (err) => {
       console.log(infoMessages.unknownError(), err.message);
