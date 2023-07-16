@@ -1,5 +1,5 @@
 import { ICustomWsClient, wss } from "../../index.js";
-import { roomsDb } from "../database/database";
+import { roomsDb } from "../database/database.js";
 
 export const getWsClientIdsInRoom = (roomId: number) => {
   const gameRoom = roomsDb.find((room) => room.roomId === roomId);
@@ -11,7 +11,9 @@ export const getWsClientIdsInRoom = (roomId: number) => {
   const wsClientsInRoom: Array<ICustomWsClient> = [];
 
   wss.clients.forEach((client) => {
-    (client.id === wsClientId_1 || wsClientId_2) && wsClientsInRoom.push(client);
+    if (client.id === wsClientId_1 || client.id === wsClientId_2) {
+      wsClientsInRoom.push(client);
+    }
   });
 
   return wsClientsInRoom;

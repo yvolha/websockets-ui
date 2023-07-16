@@ -11,4 +11,5 @@ export const successMessages = {
     `User with ID "${id}" and name "${name}" registered successfully.`,
   roomCreated: (id: number, name: string) =>
     `Game room with ID "${id}" created and user "${name}" added to it.`,
+  gameCreated: (id: number) => `Game with ID "${id}" created.`,
 };

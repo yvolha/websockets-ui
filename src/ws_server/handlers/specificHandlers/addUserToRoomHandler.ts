@@ -2,6 +2,7 @@ import { ICustomWsClient } from "../../../index.js";
 import { roomsDb, usersDb } from "../../database/database.js";
 import { sendAvailableRooms } from "../messagesToAll/updateAvailableRooms.js";
 import { IParsedMessage } from "../wsClientHandler.js";
+import { handleGameCreation } from "./createGameHandler.js";
 
 export const handleAddUserToRoom = async (
   parsedMessage: IParsedMessage,
@@ -24,6 +25,8 @@ export const handleAddUserToRoom = async (
       name,
       index,
     });
+
+    handleGameCreation(indexRoom);
 
     roomsDb.splice(roomToAddIndex, 1);
     sendAvailableRooms();
