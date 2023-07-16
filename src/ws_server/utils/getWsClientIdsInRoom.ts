@@ -8,11 +8,11 @@ export const getWsClientIdsInRoom = (roomId: number) => {
     ? gameRoom.roomUsers.map((user) => user.index)
     : [-1, -1];
 
-  const wsClientsInRoom = [];
+  const wsClientsInRoom: Array<ICustomWsClient> = [];
 
-  wss.clients.forEach((client) => console.log(client.id));
-  /*
-  for (let i = 0; i < wss.clients.size; i++){
-    if (wss.clients.id)
-  } */
+  wss.clients.forEach((client) => {
+    (client.id === wsClientId_1 || wsClientId_2) && wsClientsInRoom.push(client);
+  });
+
+  return wsClientsInRoom;
 };

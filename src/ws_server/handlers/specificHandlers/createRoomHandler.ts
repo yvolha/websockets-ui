@@ -7,9 +7,14 @@ import { sendAvailableRooms } from "../messagesToAll/updateAvailableRooms.js";
 export const handleCreateRoom = (wsClient: ICustomWsClient) => {
   const index = wsClient.id;
   const name = usersDb[index]?.name;
-  const roomId = createGameRoomId();
 
-  if (name) {
+  const roomByThisUserIndex = roomsDb.findIndex((room) =>
+    room.roomUsers.some((user) => user.index === wsClient.id)
+  );
+
+  if (name && roomByThisUserIndex === -1) {
+    const roomId = createGameRoomId();
+
     roomsDb.push({
       roomId: roomId,
       roomUsers: [

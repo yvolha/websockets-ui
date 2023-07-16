@@ -9,16 +9,23 @@ export const handleAddUserToRoom = async (
 ) => {
   const { indexRoom } = JSON.parse(parsedMessage.data.toString());
   const roomToAdd = roomsDb.find((room) => room.roomId === indexRoom);
+  const roomToAddIndex = roomsDb.findIndex((room) => room.roomId === indexRoom);
 
   const index = wsClient.id;
   const name = usersDb[index]?.name;
 
-  if (roomToAdd && name && typeof indexRoom === "number") {
+  if (
+    roomToAdd &&
+    name &&
+    typeof indexRoom === "number" &&
+    wsClient.id !== roomToAdd.roomUsers[0]?.index
+  ) {
     roomToAdd.roomUsers.push({
       name,
       index,
     });
 
+    roomsDb.splice(roomToAddIndex, 1);
     sendAvailableRooms();
   }
 };
