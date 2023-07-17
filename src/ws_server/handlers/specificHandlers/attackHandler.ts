@@ -1,4 +1,4 @@
-import { ICustomWsClient, wss } from "../../../index.js";
+import { wss } from "../../../index.js";
 import { boardsDb } from "../../database/database.js";
 import { wsMessageTypes } from "../../utils/wsMessageTypes.js";
 import { IParsedMessage } from "../wsClientHandler.js";
