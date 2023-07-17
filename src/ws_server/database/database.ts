@@ -1,3 +1,5 @@
+import { IFilledCell, IShip } from "../handlers/specificHandlers/addShipsHandler.js";
+
 interface IUser {
   name: string;
   password: string;
@@ -34,9 +36,8 @@ export const roomsDb: Array<IRoom> = [];
 export interface IBoard {
   userId: number;
   gameId: number;
-  board: number[][];
+  board: number[][] | IFilledCell[][];
+  ships: IShip[];
 }
 
-export type IBoardsDb = Record<number, IBoard>;
-
-export const boardsDb: IBoardsDb = {};
+export const boardsDb: IBoard[] = [];

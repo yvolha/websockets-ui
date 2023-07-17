@@ -5,7 +5,7 @@ export enum wsMessageTypes {
   add_user_to_room = "add_user_to_room",
   create_game = "create_game",
   update_room = "update_room",
-  add_ships = "add_ship",
+  add_ships = "add_ships",
   start_game = "start_game",
   attack = "attack",
   randomAttack = "randomAttack",

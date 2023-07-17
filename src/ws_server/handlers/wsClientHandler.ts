@@ -6,6 +6,8 @@ import { wsMessageTypes } from "../utils/wsMessageTypes.js";
 import { handleReg } from "./specificHandlers/regHandler.js";
 import { handleCreateRoom } from "./specificHandlers/createRoomHandler.js";
 import { handleAddUserToRoom } from "./specificHandlers/addUserToRoomHandler.js";
+import { handleAddShips } from "./specificHandlers/addShipsHandler.js";
+import { handleAttack } from "./specificHandlers/attackHandler.js";
 
 export interface IParsedMessage {
   type: string;
@@ -15,7 +17,7 @@ export interface IParsedMessage {
 
 export default async (rawData: RawData, wsClient: ICustomWsClient) => {
   const parsedMessage: IParsedMessage = JSON.parse(rawData.toString());
-  console.log(parsedMessage);
+  //onsole.log(parsedMessage);
 
   switch (parsedMessage.type) {
     case wsMessageTypes.reg:
@@ -31,18 +33,14 @@ export default async (rawData: RawData, wsClient: ICustomWsClient) => {
       break;
 
     case wsMessageTypes.add_ships:
-      break;
-
-    case wsMessageTypes.start_game:
+      handleAddShips(parsedMessage);
       break;
 
     case wsMessageTypes.attack:
+      handleAttack(parsedMessage);
       break;
 
     case wsMessageTypes.randomAttack:
-      break;
-
-    case wsMessageTypes.turn:
       break;
 
     case wsMessageTypes.finish:
