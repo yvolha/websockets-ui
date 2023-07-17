@@ -30,3 +30,13 @@ export interface IRoom {
 }
 
 export const roomsDb: Array<IRoom> = [];
+
+export interface IBoard {
+  userId: number;
+  gameId: number;
+  board: number[][];
+}
+
+export type IBoardsDb = Record<number, IBoard>;
+
+export const boardsDb: IBoardsDb = {};
